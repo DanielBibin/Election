@@ -30,10 +30,10 @@ class register_c:
 
         form = st.form("Registering Candidate", clear_on_submit=False)
         with form:
-            Adno = st.text_input("Please Enter The Candidates Admission Number:")
-            Name = st.text_input("Please Enter The Candidates Name:")
+            Adno = st.text_input("Please Enter The Candidate's Admission Number:")
+            Name = st.text_input("Please Enter The Candidate's Name:")
             Symbol = st.text_input("Please Enter The Symbol Of The Candidate:")
-            position = st.selectbox("Please Select The Candidates Position:",
+            position = st.selectbox("Please Select The Candidate's Position:",
                 positions + ["Add New Position(A Pop Up will be displayed later)"],
                 index=None
             )
@@ -49,19 +49,24 @@ class register_c:
             else:
                 st.session_state.position_value = position
 
+        # define the dialog once
+        @st.dialog("Enter New Position")
+        def add_new_position_dialog():
+            newposition = st.text_input("Enter The New Position", key="new_pos_input")
+            col1, col2, col3 = st.columns(3)
+            with col2:
+                modal_submit = st.button("Submit")
+            if modal_submit:
+                if newposition.strip():
+                    st.session_state.position_value = newposition
+                    st.session_state.show_modal = False
+                    st.rerun()
+                else:
+                    st.error("Please Enter The New Position")
+
+        # show the dialog when requested
         if st.session_state.show_modal:
-            with st.modal("Enter New Position:"):
-                newposition = st.text_input("Enter The New Position")
-                col1, col2, col3 = st.columns(3)
-                with col2:
-                    modal_submit = st.button("Submit")
-                if modal_submit:
-                    if newposition.strip():
-                        st.session_state.position_value = newposition
-                        st.session_state.show_modal = False
-                        st.rerun()
-                    else:
-                        st.error("Please Enter The New Position")
+            add_new_position_dialog()
 
         if (
             st.session_state.position_value
