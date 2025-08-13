@@ -1,6 +1,4 @@
-import streamlit as st
-import mysql.connector
-import time
+import streamlit as st, mysql.connector, time
 
 class register_c:
     def __init__(self):
