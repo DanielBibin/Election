@@ -2,7 +2,7 @@ import mysql.connector
 
 class Init:
     def __init__(self):
-        conn = mysql.connector.connect(host = 'localhost', user = 'root', password = '12345678')
+        conn = mysql.connector.connect(host = 'localhost', user = 'root', password = '123')
         cursor = conn.cursor()
         cursor.execute("CREATE DATABASE IF NOT EXISTS Student_Election;")
         cursor.execute("USE Student_Election;")

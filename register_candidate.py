@@ -16,7 +16,7 @@ class register_c:
         conn = mysql.connector.connect(
             host='localhost',
             user='root',
-            passwd='12345678',
+            passwd='123',
             database='student_election'
         )
         cursor = conn.cursor()

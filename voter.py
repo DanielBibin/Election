@@ -5,7 +5,7 @@ class Voting:
     def __init__(self):
         header_placeholder = st.empty()
 
-        conn = mysql.connector.connect(host='localhost', user='root', password='12345678')
+        conn = mysql.connector.connect(host='localhost', user='root', password='123')
         cursor = conn.cursor()
         cursor.execute("USE Student_Election;")
 
