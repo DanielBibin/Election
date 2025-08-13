@@ -11,7 +11,7 @@ class register_c:
 
         st.subheader("Registering A New Candidate")
 
-        conn = mysql.connector.connect(host='localhost', user='root', passwd='123', database='student_election')
+        conn = mysql.connector.connect(host='localhost', user='root', passwd='1234', database='student_election')
         cursor = conn.cursor()
         cursor.execute("SELECT DISTINCT Standing_For FROM candidates;")
         result = cursor.fetchall()

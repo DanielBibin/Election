@@ -2,7 +2,7 @@ import streamlit as st, mysql.connector, time
 
 class Voting:
     def __init__(self):
-        conn = mysql.connector.connect(host = 'localhost', user = 'root', password = '123', database = 'student_election')
+        conn = mysql.connector.connect(host = 'localhost', user = 'root', password = '1234', database = 'student_election')
         cursor = conn.cursor()
         st.subheader("Voting")
         Voting_Form = st.form("Voting Form", True)

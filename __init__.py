@@ -34,7 +34,7 @@ with admin_placeholder.container():
         admin_button = st.button("Access Admin Panel")
 
 if admin_mode and admin_button:
-    if password == "admin123":
+    if password == "admin1234":
         st.session_state.user_id = "admin"
         st.session_state.is_admin = True
         admin_placeholder.empty()
@@ -47,7 +47,7 @@ if admin_mode and admin_button:
 
 if login_button and user_id.strip():
     user_id = user_id.strip()
-    conn = mysql.connector.connect(host='localhost', user='root', password='123')
+    conn = mysql.connector.connect(host='localhost', user='root', password='1234')
     cursor = conn.cursor()
     cursor.execute("USE Student_Election")
     cursor.execute("SELECT * FROM users WHERE user_id = %s", (user_id,))
