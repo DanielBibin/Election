@@ -13,12 +13,7 @@ class register_c:
 
         st.subheader("Registering A New Candidate")
 
-        conn = mysql.connector.connect(
-            host='localhost',
-            user='root',
-            passwd='123',
-            database='student_election'
-        )
+        conn = mysql.connector.connect(host='localhost', user='root', passwd='123', database='student_election')
         cursor = conn.cursor()
         cursor.execute("SELECT DISTINCT Standing_For FROM candidates;")
         result = cursor.fetchall()
@@ -33,10 +28,7 @@ class register_c:
             Adno = st.text_input("Please Enter The Candidate's Admission Number:")
             Name = st.text_input("Please Enter The Candidate's Name:")
             Symbol = st.text_input("Please Enter The Symbol Of The Candidate:")
-            position = st.selectbox("Please Select The Candidate's Position:",
-                positions + ["Add New Position(A Pop Up will be displayed later)"],
-                index=None
-            )
+            position = st.selectbox("Please Select The Candidate's Position:", positions + ["Add New Position(A Pop Up will be displayed later)"], index=None)
             picture_files = st.file_uploader("Please Input An Image Of The Candidate:", type=["jpg", "jpeg", "png", "webp"])
             col1, col2, col3, col4, col5 = st.columns(5)
             with col3:
@@ -49,7 +41,6 @@ class register_c:
             else:
                 st.session_state.position_value = position
 
-        # define the dialog once
         @st.dialog("Enter New Position")
         def add_new_position_dialog():
             newposition = st.text_input("Enter The New Position", key="new_pos_input")
@@ -64,24 +55,16 @@ class register_c:
                 else:
                     st.error("Please Enter The New Position")
 
-        # show the dialog when requested
         if st.session_state.show_modal:
             add_new_position_dialog()
 
-        if (
-            st.session_state.position_value
-            and st.session_state.form_submitted
-            and not st.session_state.show_modal
-        ):
+        if (st.session_state.position_value and st.session_state.form_submitted and not st.session_state.show_modal):
             if Adno and Name and Symbol and picture_files:
                 cursor.execute("SELECT Adno FROM candidates WHERE Adno = %s", (Adno,))
                 exists = cursor.fetchone()
                 if exists is None:
                     picture_bytes = picture_files.read()
-                    cursor.execute(
-                        "INSERT INTO candidates(Adno, Name, Symbol, Standing_For, picture) VALUES (%s, %s, %s, %s, %s);",
-                        (Adno, Name, Symbol, st.session_state.position_value, picture_bytes)
-                    )
+                    cursor.execute("INSERT INTO candidates(Adno, Name, Symbol, Standing_For, picture) VALUES (%s, %s, %s, %s, %s);", (Adno, Name, Symbol, st.session_state.position_value, picture_bytes))
                     conn.commit()
                     st.success("Successfully Entered The Candidate")
                     time.sleep(1)
