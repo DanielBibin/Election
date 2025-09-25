@@ -21,7 +21,7 @@ class register_c:
             for pos in result:
                 positions.append(pos[0])
 
-        form = st.form("Registering Candidate", clear_on_submit=False)
+        form = st.form("Registering Candidate", clear_on_submit=True)
         with form:
             Adno = st.text_input("Please Enter The Candidate's Admission Number:")
             Name = st.text_input("Please Enter The Candidate's Name:")
