@@ -34,7 +34,7 @@ with admin_placeholder.container():
         admin_button = st.button("Access Admin Panel")
 
 if admin_mode and admin_button:
-    if password == "admin1234":
+    if password == "admin123":
         st.session_state.user_id = "admin"
         st.session_state.is_admin = True
         admin_placeholder.empty()
