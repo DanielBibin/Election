@@ -1,4 +1,4 @@
-import streamlit as st, voting, register_candidate, register_voter, results, report, DBMS
+import streamlit as st, voting, register_candidate, register_voter, results, report
 from streamlit_option_menu import option_menu
 
 class Admin_Powers:
@@ -6,7 +6,7 @@ class Admin_Powers:
         st.header("Admin Panel")
         
         with st.sidebar:
-            selected = option_menu("Main Menu", ["🗳️ Voting", "🧾 Register Candidate", "🆔 Register Voter", "📊 Live Results", "📑 Report Generation", "🗄️ Database Management"], default_index=0)
+            selected = option_menu("Main Menu", ["🗳️ Voting", "🧾 Register Candidate", "🆔 Register Voter", "📊 Live Results", "📑 Report Generation"], default_index=0)
             
         if selected == '🗳️ Voting':
             voter = voting.Voting()
@@ -18,5 +18,3 @@ class Admin_Powers:
             voter = results.live_results()
         elif selected == '📑 Report Generation':
             voter = report.report_gen()
-        elif selected == '🗄️ Database Management':
-            voter = DBMS.management()
