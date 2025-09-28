@@ -69,9 +69,9 @@ class report_gen:
                 total_votes_pos += i[2]
             for i in pos_candidates:
                 if i[3] == 1:
-                    pdf.cell(w = 0, h = 8, txt = "•"+str(i[0])+" - "+str(i[2])+"("+str(round((i[2]/total_votes_pos)*100, 1))+')', ln = False, align = "L")
+                    pdf.cell(w = pdf.get_string_width("•"+str(i[0])+" - "+str(i[2])+"("+str(round((i[2]/total_votes_pos)*100, 1))+')'), h = 8, txt = "•"+str(i[0])+" - "+str(i[2])+"("+str(round((i[2]/total_votes_pos)*100, 1))+')', ln = False, align = "L")
                     pdf.set_font("Emoji", "", 18)
-                    pdf.cell(w = pdf.get_string_width(" ✅"), h = 8, txt = " ✅", ln = False, align="L")
+                    pdf.cell(w = pdf.get_string_width("   ✅"), h = 8, txt = "   ✅", ln = False, align="L")
                     pdf.set_font("ArialUnicode", "", 18)
                     pdf.cell(w = 0, h = 8, txt = 'Winner', ln = True, align = "L")
                 else:
@@ -100,6 +100,7 @@ class report_gen:
         
         info_placeholder.empty()
         
-        st.download_button(label = "Download Report As A PDF", data = buffer, file_name = "Election Report - "+str(time.localtime()[0])+".pdf", mime="application/pdf")
+        report_name = "Election Report - "+str(time.localtime()[0])
+        st.download_button(label = "Download Report As A PDF", data = buffer, file_name = report_name+".pdf", mime="application/pdf")
             
-        st.markdown('<iframe src="data:application/pdf;base64,' + pdf_base64 + '" width="700" height="900" type="application/pdf"></iframe>', unsafe_allow_html=True)
+        st.markdown('<iframe src="data:application/pdf;base64,' + pdf_base64 + '" width="700" height="900" type="application/pdf" title="' + report_name + '"></iframe>', unsafe_allow_html=True)
