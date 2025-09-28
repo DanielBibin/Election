@@ -1,4 +1,4 @@
-import streamlit as st, mysql.connector, plotly.express as px
+import streamlit as st, mysql.connector, plotly.express as px,  time
 
 class live_results:
     def __init__(self):
@@ -29,3 +29,5 @@ class live_results:
                     fig.update_layout(title = "Votes for "+pos, xaxis_title = 'Candidates', yaxis_title = "Vote Count", uniformtext_minsize = 8, uniformtext_mode="hide")
                     
                     st.plotly_chart(fig, use_container_width=True)
+        time.sleep(2)
+        st.rerun()
