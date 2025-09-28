@@ -71,7 +71,7 @@ class report_gen:
                 if i[3] == 1:
                     pdf.cell(w = 0, h = 8, txt = "•"+str(i[0])+" - "+str(i[2])+"("+str(round((i[2]/total_votes_pos)*100, 1))+')', ln = False, align = "L")
                     pdf.set_font("Emoji", "", 18)
-                    pdf.cell(w =0 ,h = 8, txt = " ✅", ln = False, align="L")
+                    pdf.cell(w = pdf.get_string_width(" ✅"), h = 8, txt = " ✅", ln = False, align="L")
                     pdf.set_font("ArialUnicode", "", 18)
                     pdf.cell(w = 0, h = 8, txt = 'Winner', ln = True, align = "L")
                 else:
