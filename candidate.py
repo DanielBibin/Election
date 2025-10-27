@@ -8,6 +8,10 @@ class c_management:
             st.session_state.position_value = None
         if "form_submitted" not in st.session_state:
             st.session_state.form_submitted = False
+        if "confirm_truncate" not in st.session_state:
+            st.session_state.confirm_truncate = False
+        if "show_truncate_dialog" not in st.session_state:
+            st.session_state.show_truncate_dialog = False
 
         st.header("Registering A New Candidate")
 
@@ -115,10 +119,6 @@ class c_management:
                 st.rerun()
                 
         st.header("Truncating Candidates(For New Election)")
-        if "confirm_truncate" not in st.session_state:
-            st.session_state.confirm_truncate = False
-        if "show_truncate_dialog" not in st.session_state:
-            st.session_state.show_truncate_dialog = False
         with st.columns(5)[2]:
             truncate = st.button("Truncate", key = 'truncate')
         if truncate:
