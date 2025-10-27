@@ -24,21 +24,19 @@ class Voting:
             else:
                 break
 
-        if st.session_state.pos_index == 0:
+        if "pos_index" not in st.session_state:
+            st.session_state.pos_index = 0
             header_placeholder.empty()
             with header_placeholder.container():
                 st.header("✅ Voting has been Allowed")
                 time.sleep(0.5)
             header_placeholder.empty()
         
-        cursor.execute("SELECT DISTINCT Standing_For FROM candidates")
+        cursor.execute("SELECT DISTINCT Standing_For FROM candidates ORDER BY Standing_For ASC")
         result = cursor.fetchall()
         positions = []
         for i in result:
             positions.append(i[0])
-
-        if "pos_index" not in st.session_state:
-            st.session_state.pos_index = 0
 
         if st.session_state.pos_index >= len(positions):
             success_placeholder = st.empty()
@@ -50,13 +48,15 @@ class Voting:
             conn.commit()
             success_placeholder.success("✅ Your votes have been recorded. Thank you!")
             time.sleep(2)
-            st.session_state.pos_index = 0
+            del st.session_state["pos_index"]
+            success_placeholder.empty()
+            st.rerun()
 
         current_position = positions[st.session_state.pos_index]
         form_placeholder = st.empty()
         error_placeholder = st.empty()
 
-        with form_placeholder.form(f"form_{st.session_state.user_id}_{current_position}", clear_on_submit=True):
+        with form_placeholder.form("form_"+st.session_state.user_id+str(st.session_state.pos_index), clear_on_submit=True):
             st.subheader("Position: ", current_position)
             cursor.execute("SELECT Name, picture FROM candidates WHERE Standing_For = %s", (current_position,))
             candidates_data = cursor.fetchall()
