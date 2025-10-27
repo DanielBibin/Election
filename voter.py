@@ -10,20 +10,26 @@ class Voting:
         cursor.execute("SELECT status FROM users WHERE user_id = %s", (st.session_state.user_id,))
         status = cursor.fetchone()[0]
 
-        if status != 1:
-            st.empty()
+        while True:
+            cursor.execute("SELECT status FROM users WHERE user_id = %s", (st.session_state.user_id,))
+            status = cursor.fetchone()[0]
+
+            if status != 1:
+                header_placeholder.empty()
+                with header_placeholder.container():
+                    st.header("❌ Voting Is Not Currently Available for this Device")
+                time.sleep(2)
+                st.rerun() 
+                return
+            else:
+                break
+
+        if st.session_state.pos_index == 0:
             header_placeholder.empty()
             with header_placeholder.container():
-                st.header("❌ Voting Is Not Currently Available for this Device")
-            time.sleep(2)
-            st.rerun()
-            return
-
-        header_placeholder.empty()
-        with header_placeholder.container():
-            st.header("✅ Voting has been Allowed")
-            time.sleep(0.5)
-        header_placeholder.empty()
+                st.header("✅ Voting has been Allowed")
+                time.sleep(0.5)
+            header_placeholder.empty()
         
         cursor.execute("SELECT DISTINCT Standing_For FROM candidates")
         result = cursor.fetchall()
@@ -45,7 +51,6 @@ class Voting:
             success_placeholder.success("✅ Your votes have been recorded. Thank you!")
             time.sleep(2)
             st.session_state.pos_index = 0
-            st.rerun()
 
         current_position = positions[st.session_state.pos_index]
         form_placeholder = st.empty()
@@ -62,10 +67,11 @@ class Voting:
                 images_bytes.append(candidate_row[1])
             cols = st.columns(len(candidates))
             for i in range(len(candidates)):
-                image = Image.open(io.BytesIO(images_bytes[i]))
-                with cols[i]:
-                    st.image(image, use_container_width=True)
-                    st.caption(candidates[i])
+                if images_bytes[i] is not None:
+                    image = Image.open(io.BytesIO(images_bytes[i]))
+                    with cols[i]:
+                        st.image(image, use_container_width=True)
+                        st.caption(candidates[i])
 
             selected_candidate = st.radio("Select your candidate for "+current_position, candidates, index=None)
             submitted = st.form_submit_button("Submit")
