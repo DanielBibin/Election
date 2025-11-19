@@ -1,13 +1,15 @@
 import streamlit as st, voting, candidate, voters, results, report
 from streamlit_option_menu import option_menu
 
-class Admin_Powers:
-    def __init__(self):
-        st.header("Admin Panel")
+def Admin_Powers():
+    st.header("Admin Panel")
+    placeholder = st.empty()
+    
+    with st.sidebar:
+        selected = option_menu("Main Menu", ["🗳️ Voting", "🧾 Candidate Management", "🆔 Voter Management", "📊 Live Results", "📑 Report Generation"], default_index=0)
         
-        with st.sidebar:
-            selected = option_menu("Main Menu", ["🗳️ Voting", "🧾 Candidate Management", "🆔 Voter Management", "📊 Live Results", "📑 Report Generation"], default_index=0)
-            
+    placeholder.empty()
+    with placeholder.container():
         if selected == '🗳️ Voting':
             voter = voting.Voting()
         elif selected == '🧾 Candidate Management':

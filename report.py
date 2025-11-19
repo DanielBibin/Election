@@ -1,34 +1,36 @@
 import streamlit as st, mysql.connector, io, base64, time
 from fpdf import FPDF
 
-class report_gen:
-    def __init__(self):
-        st.header("Report Generation")
-        conn = mysql.connector.connect(host = 'localhost', user = 'root', passwd = '1234', database = 'student_election')
-        cursor = conn.cursor()
-        info_placeholder = st.empty()
-        with info_placeholder.container():
-            st.info("Please Wait. Generating Report...")
-        cursor.execute("SELECT DISTINCT Standing_For FROM candidates;")
-        result = cursor.fetchall()
-        all_candidates = []
-        positions = []
-        for i in result:
-            positions.append(i[0])
-        for pos in positions:
-            cursor.execute("SELECT Name, Votes FROM candidates WHERE Standing_For = %s", (pos,))
-            candidates = cursor.fetchall()
-            if candidates:
-                votes = []
-                for i in candidates:
-                    if i[1] not in votes:
-                        votes.append(i[1])
-                votes.sort(reverse = True)
-                for name, vote in candidates:
-                    result = votes.index(vote)+1
-                    all_candidates.append([name, pos, vote, result])
+def report_gen():
+    st.header("Report Generation")
+    conn = mysql.connector.connect(host = 'localhost', user = 'root', passwd = '1234', database = 'student_election')
+    cursor = conn.cursor()
+    info_placeholder = st.empty()
+    with info_placeholder.container():
+        st.info("Please Wait. Generating Report...")
+    cursor.execute("SELECT DISTINCT Standing_For FROM candidates;")
+    result = cursor.fetchall()
+    all_candidates = []
+    positions = []
+    for i in result:
+        positions.append(i[0])
+    for pos in positions:
+        cursor.execute("SELECT Name, Votes FROM candidates WHERE Standing_For = %s", (pos,))
+        candidates = cursor.fetchall()
+        if candidates:
+            votes = []
+            for i in candidates:
+                if i[1] not in votes:
+                    votes.append(i[1])
+            votes.sort(reverse = True)
+            for name, vote in candidates:
+                result = votes.index(vote)+1
+                all_candidates.append([name, pos, vote, result])
         
-        
+    cursor.execute("SELECT COUNT(*) FROM voters WHERE voting_status = 1;")
+    voted_voters = cursor.fetchall()[0][0]
+    print(voted_voters)
+    if voted_voters!=0:
         pdf = FPDF()
         pdf.add_page()
         pdf.add_font("ArialUnicode", "", "C:\\Windows\\Fonts\\arial.ttf", uni=True)
@@ -46,8 +48,6 @@ class report_gen:
         pdf.cell(w = 0, h = 8, txt = "•"+pdf_positions, ln = True, align = "L")
         cursor.execute("SELECT COUNT(*) FROM voters;")
         total_voters = cursor.fetchall()[0][0]
-        cursor.execute("SELECT COUNT(*) FROM voters WHERE voting_status = 1;")
-        voted_voters = cursor.fetchall()[0][0]
         voted_percent = round((voted_voters/total_voters)*100, 1)
         pdf.cell(w = 0, h = 8, txt = "•Total Eligible Voters: "+str(total_voters), ln = True, align = "L")
         pdf.cell(w = 0, h = 8, txt = "•Total Votes Casted: "+str(voted_voters), ln = True, align = "L")
@@ -104,3 +104,6 @@ class report_gen:
         st.download_button(label = "Download Report As A PDF", data = buffer, file_name = report_name+".pdf", mime="application/pdf")
             
         st.markdown('<iframe src="data:application/pdf;base64,' + pdf_base64 + '" width="700" height="900" type="application/pdf" title="' + report_name + '"></iframe>', unsafe_allow_html=True)
+    else:
+        info_placeholder.empty()
+        st.error("No Votes Have Been Casted Yet")
