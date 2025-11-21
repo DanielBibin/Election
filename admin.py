@@ -3,12 +3,12 @@ from streamlit_option_menu import option_menu
 
 def Admin_Powers():
     st.header("Admin Panel")
-    placeholder = st.empty()
+    main_placeholder = st.empty()
     with st.sidebar:
         selected = option_menu("Main Menu", ["🗳️ Voting", "🧾 Candidate Management", "🆔 Voter Management", "📊 Live Results", "📑 Report Generation"], default_index=0)
         
-    placeholder.empty()
-    with placeholder.container():
+    main_placeholder.empty()
+    with main_placeholder.container():
         if selected == '🗳️ Voting':
             voting.Voting()
         elif selected == '🧾 Candidate Management':

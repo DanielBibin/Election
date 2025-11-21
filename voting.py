@@ -14,8 +14,8 @@ def Voting():
             for user in result:
                 users.append(user[0])
         user_id = st.selectbox("Enter the user ID of the target PC", users, index = None)
-        col1, col2, col3, col4, col5 = st.columns(5)
-        with col3:
+        cols = st.columns(5)
+        with cols[2]:
             global submit
             submit = st.form_submit_button()
         if submit:
