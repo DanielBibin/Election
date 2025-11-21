@@ -28,6 +28,3 @@ def live_results():
                 st.plotly_chart(fig, use_container_width = True)
     time.sleep(2)
     st.rerun()
-    
-def clear_graphs():
-    st.empty()

@@ -29,7 +29,6 @@ def report_gen():
         
     cursor.execute("SELECT COUNT(*) FROM voters WHERE voting_status = 1;")
     voted_voters = cursor.fetchall()[0][0]
-    print(voted_voters)
     if voted_voters!=0:
         pdf = FPDF()
         pdf.add_page()
@@ -56,7 +55,6 @@ def report_gen():
         pdf.set_font("ArialUnicode", "B", 18)
         pdf.cell(w = 0, h = 12, txt = "2. Results By Position", ln = True, align = 'L')
         pdf.set_font("ArialUnicode", "", 18)
-        print(all_candidates)
         for pos in positions:
             pdf.cell(w = 0, h = 12, txt = pos, ln = True, align = 'L')
             pos_candidates = []
