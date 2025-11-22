@@ -31,7 +31,7 @@ def Voting():
             time.sleep(0.5)
         header_placeholder.empty()
     
-    cursor.execute("SELECT DISTINCT Standing_For FROM candidates ORDER BY Standing_For ASC")
+    cursor.execute("SELECT DISTINCT Position FROM candidates ORDER BY Position ASC")
     result = cursor.fetchall()
     positions = []
     for i in result:
@@ -57,7 +57,7 @@ def Voting():
     
     with form_placeholder.form("form_"+st.session_state.user_id+str(st.session_state.pos_index), clear_on_submit=True):
         st.subheader("Position: ", current_position)
-        cursor.execute("SELECT Name, picture FROM candidates WHERE Standing_For = %s", (current_position,))
+        cursor.execute("SELECT Name, picture FROM candidates WHERE Position = %s", (current_position,))
         candidates_data = cursor.fetchall()
         candidates = []
         images_bytes = []
@@ -77,7 +77,7 @@ def Voting():
 
     if submitted:
         if selected_candidate:
-            cursor.execute("UPDATE candidates SET votes = votes + 1 WHERE Name = %s AND Standing_For = %s", (selected_candidate, current_position))
+            cursor.execute("UPDATE candidates SET votes = votes + 1 WHERE Name = %s AND Position = %s", (selected_candidate, current_position))
             conn.commit()
             st.session_state.pos_index += 1
             form_placeholder.empty()
