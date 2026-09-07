@@ -3,7 +3,7 @@ from PIL import Image
 
 def Voting():
     header_placeholder = st.empty()
-    conn = mysql.connector.connect(host='localhost', user='root', password='1234')
+    conn = mysql.connector.connect(host='localhost', user='root', password='854753')
     cursor = conn.cursor()
     cursor.execute("USE Student_Election;")
     cursor.execute("SELECT status FROM users WHERE user_id = %s", (st.session_state.user_id,))

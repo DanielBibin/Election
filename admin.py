@@ -35,7 +35,7 @@ def sure_to_truncate():
         st.rerun()
 
 def Voting():
-    conn = mysql.connector.connect(host = 'localhost', user = 'root', password = '1234', database = 'student_election')
+    conn = mysql.connector.connect(host = 'localhost', user = 'root', password = '854753', database = 'student_election')
     cursor = conn.cursor()
     st.subheader("Voting")
     Voting_Form = st.form("Voting Form", True)
@@ -70,7 +70,7 @@ def Voting():
                 return
 
 def c_management():
-    conn = mysql.connector.connect(host='localhost', user='root', passwd='1234', database='student_election')
+    conn = mysql.connector.connect(host='localhost', user='root', passwd='854753', database='student_election')
     cursor = conn.cursor()
     
     if "show_modal" not in st.session_state:
@@ -175,7 +175,7 @@ def c_management():
         st.rerun()
         
 def v_management():
-    conn = mysql.connector.connect(host = 'localhost', user = 'root', passwd = '1234', database = 'student_election')
+    conn = mysql.connector.connect(host = 'localhost', user = 'root', passwd = '854753', database = 'student_election')
     cursor = conn.cursor()
     submit, submit_1, submit_2, submit_3 = 0, 0, 0, 0
     success_placeholder, info_placeholder = st.empty(), st.empty()
@@ -267,7 +267,7 @@ def v_management():
             
 def live_results():
     st.header("Live Voting Results")
-    conn = mysql.connector.connect(host = 'localhost', user = 'root', passwd = '1234', database = 'student_election')
+    conn = mysql.connector.connect(host = 'localhost', user = 'root', passwd = '854753', database = 'student_election')
     cursor = conn.cursor()
     cursor.execute("SELECT DISTINCT Position FROM candidates;")
     result = cursor.fetchall()
@@ -296,7 +296,7 @@ def live_results():
     
 def report_gen():
     st.header("Report Generation")
-    conn = mysql.connector.connect(host = 'localhost', user = 'root', passwd = '1234', database = 'student_election')
+    conn = mysql.connector.connect(host = 'localhost', user = 'root', passwd = '854753', database = 'student_election')
     cursor = conn.cursor()
     info_placeholder = st.empty()
     with info_placeholder.container():
