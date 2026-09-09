@@ -384,8 +384,8 @@ def report_gen():
                     break
             pdf.cell(w = 0, h = 8, txt = text, ln = True, align = "L")
         
-        pdf_bytes = pdf.output(dest='S')
-        buffer = io.BytesIO(pdf_bytes)
+        pdf_string = pdf.output(dest='S')
+        buffer = io.BytesIO(pdf_string.encode('latin-1'))
         buffer.seek(0)
         pdf_base64 = base64.b64encode(buffer.read()).decode("utf-8")
         

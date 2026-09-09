@@ -8,5 +8,6 @@ def Init():
     cursor.execute("CREATE TABLE IF NOT EXISTS users(user_id varchar(10) PRIMARY KEY UNIQUE, voter_Adno char(6), status BOOLEAN DEFAULT 0);")
     cursor.execute("CREATE TABLE IF NOT EXISTS voters(barcode char(6) PRIMARY KEY UNIQUE, Name varchar(100), voting_status BOOLEAN NOT NULL DEFAULT 0);")
     cursor.execute("CREATE TABLE IF NOT EXISTS candidates(Adno char(6) PRIMARY KEY, Name varchar(100), Symbol varchar(50), Position varchar(50), picture LONGBLOB, votes INTEGER DEFAULT 0);")
+    cursor.execute("TRUNCATE users;")
     conn.commit()
     conn.close()
